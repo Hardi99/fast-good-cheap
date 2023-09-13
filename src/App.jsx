@@ -2,56 +2,46 @@ import { useState } from 'react'
 import './App.css'
 
 // J'ai besoin d'un state pour chaque bouton qui indique true ou false
-// J'ai besoin d'une fonction qui enregistre le dernier bouton qui est passé en state true
-// J'ai besoin d'un state qui compte le nombre de boutons qui sont passés en state true
 
 const App = () => {
-  let index = 0
   const [status, setStatus] = useState(false);
   const [status2, setStatus2] = useState(false);
   const [status3, setStatus3] = useState(false);
-  const [count, setCount] = useState(index)
+
+  function randomIntFromInterval(min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
+
+  const array = [setStatus2, setStatus3]
+  const array2 = [setStatus, setStatus3]
+  const array3 = [setStatus, setStatus2]
 
   const handleStatus = () => {
     setStatus(!status)
-    console.log(status)
+    if (status2 && status3 === true) {
+      array[randomIntFromInterval(0, 1)](false)
+    }
   }
 
   const handleStatus2 = () => {
     setStatus2(!status2)
-    console.log(status2)
+    if (status && status3 === true) {
+      array2[randomIntFromInterval(0, 1)](false)
+    }
   }
 
   const handleStatus3 = () => {
     setStatus3(!status3)
-    console.log(status3)
-  }
-
-  const handlePlus = () => {
-    setCount(index + 1)
-    console.log(count)
-  }
-
-  const handleMinus = () => {
-    setCount(index - 1)
-    console.log(count)
-    if (index === 0) {
-      setCount(0)
+    if (status && status2 === true) {
+      array3[randomIntFromInterval(0, 1)](false)
     }
   }
 
   return (
     <main>
       <div>
-        <button onClick={() => {
-          // Avec cette syntaxe, je peux attrivuer plusieur fonctions à 1 seul évènemen
-          handleStatus();
-          handleMinus();
-        }}  style={status === false ? {backgroundColor: '#D34848'} : null}>FALSE</button>
-        <button onClick={() => {
-          handleStatus();
-          handlePlus();
-        }} style={status === true ? {backgroundColor: '#46AC4A'} : null}>TRUE</button>
+        <button onClick={handleStatus}  style={status === false ? {backgroundColor: '#D34848'} : null}>FALSE</button>
+        <button onClick={handleStatus} style={status === true ? {backgroundColor: '#46AC4A'} : null}>TRUE</button>
         <span>FAST</span>
       </div>
       <div>
